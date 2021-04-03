@@ -2,11 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 
-const Journey = require('../models/template/journey-model');
-const JourneyDetails = require('../models/template/journey-details-model');
+const JourneyProgress = require('../models/data/journey-p-model');
+const JourneyDetailsProgress = require('../models/data/journey-details-p-model');
 
-//DELETE JOURNEY
-router.delete('/journeys/:id', (req, res, next) => {
+//DELETE JOURNEY PROGRESS
+router.delete('/journeys-progress/:id', (req, res, next) => {
 
   const {id} = req.params;
 
@@ -15,16 +15,16 @@ router.delete('/journeys/:id', (req, res, next) => {
     return;
   }
 
-  Journey.findByIdAndRemove(id)
+  JourneyProgress.findByIdAndRemove(id)
   .then(() => {
-    return JourneyDetails.remove({journey: id})
+    return JourneyDetailsProgress.remove({journeyProgress: id})
   })
-  .then(() => res.status(200).json({message: `Journey with ${id} was removed successfully.`}) )
+  .then(() => res.status(200).json({message: `Journey Progress with ${id} was removed successfully.`}) )
   .catch(err => res.status(500).json(err))
 })
 
-//PUT JOURNEY
-router.put('/journeys/:id', (req, res, next) => {
+//PUT JOURNEY PROGRESS
+router.put('/journeys-progress/:id', (req, res, next) => {
 
   const {id} = req.params;
 
@@ -33,13 +33,13 @@ router.put('/journeys/:id', (req, res, next) => {
     return;
   }
 
-  Journey.findByIdAndUpdate(id, req.body, {new: true})
+  JourneyProgress.findByIdAndUpdate(id, req.body, {new: true})
   .then(response => res.status(200).json(response))
   .catch(err => res.status(500).json(err))
 })
 
-//GET JOURNEY
-router.get('/journeys/:id', (req, res, next) => {
+//GET JOURNEY PROGRESS
+router.get('/journeys-progress/:id', (req, res, next) => {
 
   const {id} = req.params;
 
@@ -48,23 +48,24 @@ router.get('/journeys/:id', (req, res, next) => {
     return;
   }
 
-  Journey.findById(id)
+  JourneyProgress.findById(id)
   .then(response => res.status(200).json(response))
   .catch(err => res.status(500).json(err))
 })
 
-//POST JOURNEYS
-router.post('/journeys', (req, res, next) => {
+//POST JOURNEYS PROGRESS
+router.post('/journeys-progress', (req, res, next) => {
   
-  Journey.create(req.body)
+  JourneyProgress.create(req.body)
   .then(response => res.status(200).json(response))
   .catch(err => res.status(500).json(err))
 })
 
-//GET JOURNEYS
-router.get('/journeys', (req, res, next) => {
+//GET JOURNEYS PROGRESS
+router.get('/journeys-progress', (req, res, next) => {
 
-  Journey.find()
+  JourneyProgress.find()
+  .populate('users')
   .then(response => res.status(200).json(response))
   .catch(err => res.status(500).json(err))
 })

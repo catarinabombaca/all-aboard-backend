@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
-const taskSchema = new Schema(
+const taskProgressSchema = new Schema(
   {
     name: {
       type: String,
@@ -16,21 +16,26 @@ const taskSchema = new Schema(
     },
     course: String,
     docURL: String,
-    milestones: [{
+    submitURL: String,
+    milestonesProgress: [{
       type: Schema.Types.ObjectId, 
-      ref: "Milestone" 
+      ref: "MilestonePorgress" 
     }],
     expectedDuration: {
       type: Number,
       min: 0,
       trim: true,
       required: [true, 'Expected Duration is required.']
-    }
+    },
+    start: Date,
+    end: Date,
+    status: String,
+    actualDuration: Number
   },
   {
     timestamps: true,
   }
 );
 
-const Task = mongoose.model('Task', taskSchema);
-module.exports = Task;
+const TaskProgress = mongoose.model('TaskProgress', taskProgressSchema);
+module.exports = TaskProgress;

@@ -74,12 +74,23 @@ app.locals.title = 'Onboarding API';
 
 
 //Routes
-const index = require('./routes/index');
 const auth = require('./routes/auth-routes');
 const journey = require('./routes/journey-routes');
-app.use('/', index);
+const journeyDetails = require('./routes/journey-details-routes');
+const milestone = require('./routes/milestone-routes');
+const task = require('./routes/task-routes');
+const journeyProgress = require('./routes/journey-p-routes');
+const journeyDetailsProgress = require('./routes/journey-details-p-routes');
+const milestoneProgress = require('./routes/milestone-p-routes');
+const taskProgress = require('./routes/task-p-routes');
 app.use('/', auth);
 app.use('/template', journey);
-
+app.use('/template', journeyDetails);
+app.use('/template', milestone);
+app.use('/template', task);
+app.use('/data', journeyProgress);
+app.use('/data', journeyDetailsProgress);
+app.use('/data', milestoneProgress);
+app.use('/data', taskProgress);
 
 module.exports = app;
