@@ -17,7 +17,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: [true, 'Password is required.'],
     },
     imageUrl: {
       type: String,
@@ -26,7 +26,7 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: ['Team Member', 'Team Leader'],
-      required: [true, 'Role is required']
+      required: [true, 'Role is required.']
     },
     teamLeader: {
       type: Schema.Types.ObjectId, 

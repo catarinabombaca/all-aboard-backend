@@ -59,7 +59,7 @@ app.use(passport.session());
 //Setting CORS
 app.use(cors({
   credentials: true,
-  origin: [`http://localhost:${process.env.PORT}`]
+  origin: [`http://localhost:3000`]
 }));
      
 
