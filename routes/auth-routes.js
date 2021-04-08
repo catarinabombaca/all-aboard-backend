@@ -11,14 +11,14 @@ router.post('/signup', (req, res, next) => {
 
     //Validate if there are blank mandatory fields
     if (!username || !email || !password || !role) {
-      res.status(400).json({ message: 'All fields are mandatory. Please provide your username, email, password and role.' });
+      res.json({ message: 'All fields are mandatory. Please provide your username, email, password and role.' });
       return;
     }
 
     //Validate if password meets requirements
     const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
     if(!regex.test(password)){
-        res.status(400).json({ message: 'Password needs to have at least 6 characters and must contain at least one number, one lowercase and one uppercase letter.' });
+        res.json({ message: 'Password needs to have at least 6 characters and must contain at least one number, one lowercase and one uppercase letter.' });
         return;
     }
 
@@ -34,7 +34,7 @@ router.post('/signup', (req, res, next) => {
         //If email exists, return error message
         if (foundUser.length !== 0) {
             console.log(foundUser) 
-            res.status(400).json({ message: 'Email taken. Choose another one.' });
+            res.json({message: 'Email taken. Choose another one.' });
             return;
         }
         
@@ -88,7 +88,7 @@ router.post('/login', (req, res, next) => {
         if (!theUser) {
             // "failureDetails" contains the error messages
             // from our logic in "LocalStrategy" { message: '...' }.
-            res.status(401).json(failureDetails);
+            res.json(failureDetails);
             return;
         }
  
