@@ -45,9 +45,18 @@ router.put('/tasks/:id', (req, res, next) => {
     return;
   }
 
-  Task.findByIdAndUpdate(id, req.body, {new: true})
-  .then(response => res.status(200).json(response))
-  .catch(err => res.status(500).json(err))
+  if(req.body.milestoneID) {
+    Task.updateMany({milestones: mongoose.Types.ObjectId(req.body.milestoneID)}, 
+    {$pull: {milestones: mongoose.Types.ObjectId(req.body.milestoneID)}}, {multi: true})
+    .then(() => Task.findByIdAndUpdate(id, {$push: {milestones: mongoose.Types.ObjectId(req.body.milestoneID)}}, {new: true}))
+    .then(response => res.status(200).json(response))
+    .catch(err => res.status(500).json(err))
+  } else {
+    Task.findByIdAndUpdate(id, req.body, {new: true})
+    .then(response => res.status(200).json(response))
+    .catch(err => res.status(500).json(err))
+  }
+
 })
 
 //GET TASK
