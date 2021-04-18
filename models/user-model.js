@@ -33,6 +33,10 @@ const userSchema = new Schema(
       ref: "User" 
     },
     firstTime: Boolean,
+    journeyProgress: {
+      type: Schema.Types.ObjectId, 
+      ref: "JourneyProgress" 
+    }
   },
   {
     timestamps: true,

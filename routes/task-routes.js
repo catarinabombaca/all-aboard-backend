@@ -78,16 +78,15 @@ router.get('/tasks/:id', (req, res, next) => {
 //POST TASKS
 router.post('/tasks', (req, res, next) => {
 
-  const {name, description, type, course, docsLink, expectedDuration, milestones} = req.body
+  const {name, description, type, course, docURL, expectedDuration, milestones} = req.body
 
     Task.create({
       name, 
       description, 
       type, 
       course, 
-      docsLink, 
-      expectedDuration, 
-      milestones: milestones.split(',')})
+      docURL, 
+      expectedDuration})
     .then(response => res.status(200).json(response))
     .catch(err => res.status(500).json(err))
 })

@@ -75,6 +75,7 @@ app.locals.title = 'Onboarding API';
 
 //Routes
 const auth = require('./routes/auth-routes');
+const user = require('./routes/user-routes');
 const journey = require('./routes/journey-routes');
 const journeyDetails = require('./routes/journey-details-routes');
 const milestone = require('./routes/milestone-routes');
@@ -84,6 +85,7 @@ const journeyDetailsProgress = require('./routes/journey-details-p-routes');
 const milestoneProgress = require('./routes/milestone-p-routes');
 const taskProgress = require('./routes/task-p-routes');
 app.use('/', auth);
+app.use('/', user);
 app.use('/template', journey);
 app.use('/template', journeyDetails);
 app.use('/template', milestone);
