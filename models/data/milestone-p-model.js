@@ -18,8 +18,12 @@ const milestoneProgressSchema = new Schema(
     start: Date,
     end: Date,
     progress: Number,
-    actualDuration: Number
-  },
+    actualDuration: Number,
+    milestone: {
+      type: Schema.Types.ObjectId, 
+      ref: "Milestone" 
+    }
+    },
   {
     timestamps: true,
   }

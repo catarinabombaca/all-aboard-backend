@@ -69,21 +69,7 @@ router.get('/tasks-progress/:id', (req, res, next) => {
 //POST TASKS PROGRESS
 router.post('/tasks-progress', (req, res, next) => {
 
-  const {name, description, type, course, docsURL, submitURL, start, end, status, actualDuration, expectedDuration, milestonesProgress} = req.body
-
-    TaskProgress.create({
-      name, 
-      description, 
-      type, 
-      course, 
-      docsURL, 
-      submitURL,
-      start,
-      end, 
-      status, 
-      actualDuration,
-      expectedDuration, 
-      milestonesProgress})
+    TaskProgress.create(req.body)
     .then(response => res.status(200).json(response))
     .catch(err => res.status(500).json(err))
 })

@@ -17,10 +17,10 @@ const taskProgressSchema = new Schema(
     course: String,
     docURL: String,
     submitURL: String,
-    milestonesProgress: [{
+    milestoneProgress: {
       type: Schema.Types.ObjectId, 
-      ref: "MilestonePorgress" 
-    }],
+      ref: "MilestoneProgress" 
+    },
     expectedDuration: {
       type: Number,
       min: 0,
