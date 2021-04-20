@@ -14,9 +14,9 @@ router.get('/milestones-progress/:id/tasks', (req, res, next) => {
     return;
   }
 
-  TaskProgress.find({milestonesProgress: mongoose.Types.ObjectId(id)})
+  TaskProgress.find({milestoneProgress: mongoose.Types.ObjectId(id)})
   .populate('milestonesProgresses')
-  .then(response => res.status(200).json(response))
+  .then(response =>{ res.status(200).json(response)})
   .catch(err => res.status(500).json(err))
 })
 
