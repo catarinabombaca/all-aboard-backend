@@ -1,23 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
-
+const uploader = require('../configs/cloudinary');
 const User = require('../models/user-model.js');
 
-// //DELETE TASK
-// router.delete('/tasks/:id', (req, res, next) => {
+//POST PHOTO
+router.post('/upload', uploader.single('imageUrl'), (req, res, next) => {
+  console.log('file is: ', req.file)
+  if (!req.file) {
+    next(new Error('No file uploaded!'));
+    return;
+  }
+  // get secure_url from the file object and save it in the
+  // variable 'secure_url', but this can be any name, just make sure you remember to use the same in frontend
+  res.json({secure_url: req.file.path });
+});
 
-//   const {id} = req.params;
-
-//   if(!mongoose.Types.ObjectId.isValid(id)) {
-//     res.status(400).json({message: 'Specific id is not valid.'});
-//     return;
-//   }
-
-//   Task.findByIdAndRemove(id)
-//   .then(() => res.status(200).json({message: `Task with ${id} was removed successfully.`}))
-//   .catch(err => res.status(500).json(err))
-// })
 
 //PUT USER
 router.put('/users/:id', (req, res, next) => {
@@ -49,22 +47,6 @@ router.get('/users/:id', (req, res, next) => {
   .then(response => res.status(200).json(response))
   .catch(err => res.status(500).json(err))
 })
-
-// //POST TASKS
-// router.post('/tasks', (req, res, next) => {
-
-//   const {name, description, type, course, docURL, expectedDuration, milestones} = req.body
-
-//     Task.create({
-//       name, 
-//       description, 
-//       type, 
-//       course, 
-//       docURL, 
-//       expectedDuration})
-//     .then(response => res.status(200).json(response))
-//     .catch(err => res.status(500).json(err))
-// })
 
 //GET USERS
 router.get('/users', (req, res, next) => {
