@@ -28,6 +28,12 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 
 const app = express();
 
+//Setting CORS
+app.use(cors({
+  origin: (process.env.FE_POINT || '').split(','),
+  credentials: true
+}));
+
 // Middleware Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -44,23 +50,25 @@ app.use(cookieParser());
 
 //Session settings
 const options = {
-  mongoUrl: 'mongodb://localhost/onboarding-backend',
+  mongoUrl: process.env.MONGODB_URI,
   ttl: 14*24*60*60
 };
 app.use(session({
   secret: process.env.API_SECRET,
-  store: MongoStore.create(options),
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  proxy: true,
+  cookie: {
+    maxAge: 15 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : false,
+    secure: process.env.NODE_ENV === 'production'
+  },
+  store: MongoStore.create(options),
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Setting CORS
-app.use(cors({
-  credentials: true,
-  origin: [process.env.FE_POINT]
-}));
      
 
 app.set('views', path.join(__dirname, 'views'));
