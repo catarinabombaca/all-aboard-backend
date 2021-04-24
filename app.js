@@ -28,15 +28,15 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 
 const app = express();
 
+
+// Middleware Setup
+app.use(logger('dev'));
 //Setting CORS
 app.use(cors({
   origin: (process.env.FE_POINT || '').split(','),
   credentials: true
 }));
-
-// Middleware Setup
-app.use(logger('dev'));
-app.use(bodyParser.json());
+app.use(express.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
@@ -56,7 +56,7 @@ const options = {
 app.use(session({
   secret: process.env.API_SECRET,
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
   proxy: true,
   cookie: {
     maxAge: 15 * 24 * 60 * 60 * 1000,
