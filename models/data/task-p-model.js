@@ -29,7 +29,10 @@ const taskProgressSchema = new Schema(
     },
     start: Date,
     end: Date,
-    status: String,
+    status: {
+      type: String,
+      enum: ['Pending', 'Closed']
+    },
     actualDuration: Number
   },
   {
